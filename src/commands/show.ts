@@ -52,6 +52,17 @@ export async function pickOne(): Promise<void> {
     await showProblemInternal(randomProblem);
 }
 
+export async function pickFavorateOne(): Promise<void> {
+    const problems: IProblem[] = await list.listProblems();
+    const favorateProblems: IProblem[] = problems.filter((problem: IProblem) => problem.isFavorite);
+    if (favorateProblems.length === 0) {
+        vscode.window.showInformationMessage("You don't have any favorate problem.");
+        return;
+    }
+    const randomProblem: IProblem = favorateProblems[Math.floor(Math.random() * favorateProblems.length)];
+    await showProblemInternal(randomProblem);
+}
+
 export async function showProblem(node?: LeetCodeNode): Promise<void> {
     if (!node) {
         return;
